@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informasi Stok / Katalog — Pustaka Aksara</title>
+  <!-- Font Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet Utama (External CSS) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-halaman="stok">
+
+  <!-- Header & Navigasi Toko -->
+  <header class="header-toko">
+    <div class="kontainer header-toko__baris">
+      <a href="dashboard.html" class="header-toko__logo">
+        <div>
+          <div class="header-toko__judul">Pustaka Aksara</div>
+          <div class="header-toko__subjudul">Kartu Katalog Perpustakaan &amp; Arsip Buku</div>
+        </div>
+      </a>
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-toko">
+          <li><a href="dashboard.html" class="nav-toko__link">Dashboard</a></li>
+          <li><a href="stok.html" class="nav-toko__link nav-toko__link--aktif" aria-current="page">Stok / Katalog</a></li>
+          <li><a href="checkout.html" class="nav-toko__link">Pemesanan</a></li>
+          <li><a href="tracking.html" class="nav-toko__link">Tracking</a></li>
+          <li><button type="button" id="btn-logout-header" class="nav-toko__btn-logout">Keluar</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Konten Utama Halaman Stok -->
+  <main class="main-konten">
+    <div class="kontainer">
+
+      <!-- Header Halaman & Counter Judul -->
+      <div class="stok-header-aksi">
+        <div>
+          <span class="label-kapital">Buku Besar Inventaris</span>
+          <h1 style="font-size: 2rem;">Katalog &amp; Informasi Stok</h1>
+        </div>
+        <div>
+          <span id="katalog-jumlah-judul" class="label-kapital" style="font-size: 0.875rem; color: var(--stempel); border: 2px solid var(--tinta); padding: 4px 12px; background: var(--kartu);">
+            MEMUAT DATA...
+          </span>
+        </div>
+      </div>
+
+      <!-- Tabel Buku Besar (Dirender Dinamis via JavaScript DOM dari dataKatalogBuku) -->
+      <section aria-label="Tabel Katalog Buku">
+        <div class="tabel-pembungkus">
+          <table class="tabel-ledger" id="tabel-katalog">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 70px;">Sampul</th>
+                <th scope="col" style="width: 100px;">Kode</th>
+                <th scope="col">Judul Buku</th>
+                <th scope="col">Kategori</th>
+                <th scope="col" style="text-align: right; width: 140px;">Harga</th>
+                <th scope="col" style="text-align: right; width: 100px;">Stok</th>
+                <th scope="col" style="width: 160px; text-align: center;">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-katalog-buku">
+              <!-- Baris akan dimasukkan oleh script.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Panel Form Tambah Stok Baru -->
+      <section class="form-tambah-stok" aria-labelledby="judul-form-stok">
+        <header class="kartu-arsip__header">
+          <div>
+            <span class="label-kapital">Pencatatan Buku Baru</span>
+            <h2 id="judul-form-stok" style="font-size: 1.25rem; margin-top: 2px;">Tambah Stok Buku ke Katalog</h2>
+          </div>
+        </header>
+
+        <!-- Pesan Error Form Tambah Stok -->
+        <div id="stok-pesan-error" class="form-pesan-error" role="alert"></div>
+
+        <form id="form-tambah-buku" novalidate>
+          <div class="grid-form-stok">
+            <div class="form-grup">
+              <label for="stok-kode" class="form-label">Kode Buku (Unik)</label>
+              <input type="text" id="stok-kode" class="form-input" placeholder="contoh: BK009" required>
+            </div>
+            <div class="form-grup">
+              <label for="stok-judul" class="form-label">Judul Buku</label>
+              <input type="text" id="stok-judul" class="form-input" placeholder="Masukkan judul buku" required>
+            </div>
+            <div class="form-grup">
+              <label for="stok-kategori" class="form-label">Kategori</label>
+              <select id="stok-kategori" class="form-select" required>
+                <option value="">-- Pilih Kategori --</option>
+                <option value="Novel">Novel</option>
+                <option value="Pengembangan Diri">Pengembangan Diri</option>
+                <option value="Teknologi">Teknologi</option>
+                <option value="Sejarah">Sejarah</option>
+                <option value="Sains">Sains</option>
+                <option value="Bisnis">Bisnis</option>
+              </select>
+            </div>
+            <div class="form-grup">
+              <label for="stok-harga" class="form-label">Harga Satuan (Rp)</label>
+              <input type="number" id="stok-harga" class="form-input" placeholder="95000" min="0" required>
+            </div>
+            <div class="form-grup">
+              <label for="stok-stok" class="form-label">Jumlah Stok (Eksemplar)</label>
+              <input type="number" id="stok-stok" class="form-input" placeholder="10" min="0" required>
+            </div>
+            <div class="form-grup">
+              <label for="stok-gambar" class="form-label">Pilih Berkas Sampul</label>
+              <select id="stok-gambar" class="form-select" required>
+                <option value="img/buku1.png">Sampul Buku 1 (img/buku1.png)</option>
+                <option value="img/buku2.png">Sampul Buku 2 (img/buku2.png)</option>
+                <option value="img/buku3.png">Sampul Buku 3 (img/buku3.png)</option>
+                <option value="img/buku4.png">Sampul Buku 4 (img/buku4.png)</option>
+                <option value="img/buku5.png">Sampul Buku 5 (img/buku5.png)</option>
+                <option value="img/buku6.png">Sampul Buku 6 (img/buku6.png)</option>
+                <option value="img/buku7.png">Sampul Buku 7 (img/buku7.png)</option>
+                <option value="img/buku8.png">Sampul Buku 8 (img/buku8.png)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+            <button type="submit" class="tombol tombol--utama">
+              Simpan Judul ke Katalog
+            </button>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Identitas Pembuat Wajib di Footer Seluruh Halaman -->
+  <footer class="footer-toko">
+    <div class="kontainer">
+      <p class="footer-toko__teks">
+        Dibuat oleh Astian Handal Cahya Putra · NIM 312310527 · UTS Pemrograman Web 1
+      </p>
+    </div>
+  </footer>
+
+  <!-- File JavaScript -->
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
+

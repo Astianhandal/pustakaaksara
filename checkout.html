@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pemesanan &amp; Checkout — Pustaka Aksara</title>
+  <!-- Font Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet Utama (External CSS) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-halaman="checkout">
+
+  <!-- Header & Navigasi Toko -->
+  <header class="header-toko">
+    <div class="kontainer header-toko__baris">
+      <a href="dashboard.html" class="header-toko__logo">
+        <div>
+          <div class="header-toko__judul">Pustaka Aksara</div>
+          <div class="header-toko__subjudul">Kartu Katalog Perpustakaan &amp; Arsip Buku</div>
+        </div>
+      </a>
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-toko">
+          <li><a href="dashboard.html" class="nav-toko__link">Dashboard</a></li>
+          <li><a href="stok.html" class="nav-toko__link">Stok / Katalog</a></li>
+          <li><a href="checkout.html" class="nav-toko__link nav-toko__link--aktif" aria-current="page">Pemesanan</a></li>
+          <li><a href="tracking.html" class="nav-toko__link">Tracking</a></li>
+          <li><button type="button" id="btn-logout-header" class="nav-toko__btn-logout">Keluar</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Konten Utama Pemesanan (Format 2 Kolom: Nota & Formulir) -->
+  <main class="main-konten">
+    <div class="kontainer">
+
+      <header style="margin-bottom: 24px; border-bottom: 2px solid var(--tinta); padding-bottom: 8px;">
+        <span class="label-kapital">Lembar Faktur &amp; Pemesanan</span>
+        <h1 style="font-size: 2rem;">Pemesanan Buku (Checkout)</h1>
+      </header>
+
+      <div class="checkout-grid">
+
+        <!-- Kolom Kiri: Tabel Keranjang Pesanan (Nota Gaya Cetak) -->
+        <section class="checkout-nota" aria-labelledby="judul-nota">
+          <header class="kartu-arsip__header">
+            <div>
+              <span class="label-kapital">Rincian Belanja</span>
+              <h2 id="judul-nota" style="font-size: 1.25rem;">Daftar Item Pesanan</h2>
+            </div>
+          </header>
+
+          <!-- Form Tambah Item dari Katalog ke Keranjang -->
+          <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 200px;">
+              <label for="pilih-tambah-katalog" class="visually-hidden" style="display:none;">Pilih Buku</label>
+              <select id="pilih-tambah-katalog" class="form-select" style="min-height: 38px; font-size: 0.8125rem;">
+                <!-- Diisi opsi dari script.js -->
+              </select>
+            </div>
+            <button type="button" id="btn-tambah-ke-keranjang" class="tombol tombol--sekunder tombol--kecil">
+              + Tambah Item
+            </button>
+          </div>
+
+          <!-- Tabel Item Keranjang -->
+          <div class="tabel-pembungkus" style="box-shadow: none;">
+            <table class="tabel-ledger">
+              <thead>
+                <tr>
+                  <th scope="col">Judul Buku</th>
+                  <th scope="col" style="text-align: right; width: 100px;">Harga</th>
+                  <th scope="col" style="text-align: center; width: 90px;">Jumlah</th>
+                  <th scope="col" style="text-align: right; width: 110px;">Subtotal</th>
+                  <th scope="col" style="text-align: center; width: 44px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-checkout">
+                <!-- Dirender dinamis dari script.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Baris Total Belanja dengan Garis Putus-Putus Sesuai design.md -->
+          <div class="checkout-nota__total">
+            <div>
+              <span class="label-kapital">Total Tagihan Pemesanan</span>
+              <p class="teks-lembut" style="font-size: 0.75rem;">Belum termasuk ongkos kirim (bebas ongkir khusus UTS).</p>
+            </div>
+            <div id="checkout-total-angka" class="checkout-nota__angka-total angka-tabular">
+              Rp 0
+            </div>
+          </div>
+        </section>
+
+        <!-- Kolom Kanan: Form Pemesan & Pembayaran -->
+        <section class="kartu-arsip" aria-labelledby="judul-form-pemesan">
+          <header class="kartu-arsip__header">
+            <div>
+              <span class="label-kapital">Identitas &amp; Logistik</span>
+              <h2 id="judul-form-pemesan" style="font-size: 1.25rem;">Data Pemesan &amp; Pembayaran</h2>
+            </div>
+          </header>
+
+          <form id="form-pemesanan-checkout" novalidate>
+            <div class="form-grup">
+              <label for="checkout-nama" class="form-label">Nama Lengkap Pemesan</label>
+              <input type="text" id="checkout-nama" class="form-input" placeholder="Masukkan nama penerima" required>
+              <div id="error-checkout-nama" class="form-pesan-error"></div>
+            </div>
+
+            <div class="form-grup">
+              <label for="checkout-email" class="form-label">Alamat Email</label>
+              <input type="email" id="checkout-email" class="form-input" placeholder="penerima@mail.com" required>
+              <div id="error-checkout-email" class="form-pesan-error"></div>
+            </div>
+
+            <div class="form-grup">
+              <label for="checkout-telepon" class="form-label">Nomor WhatsApp / HP</label>
+              <input type="tel" id="checkout-telepon" class="form-input" placeholder="contoh: 081234567890" required>
+              <div id="error-checkout-telepon" class="form-pesan-error"></div>
+            </div>
+
+            <div class="form-grup">
+              <label for="checkout-alamat" class="form-label">Alamat Lengkap Pengiriman</label>
+              <textarea id="checkout-alamat" class="form-textarea" placeholder="Tuliskan nama jalan, nomor rumah, RT/RW, kecamatan, dan kota/kabupaten" required></textarea>
+              <div id="error-checkout-alamat" class="form-pesan-error"></div>
+            </div>
+
+            <div class="form-grup">
+              <label for="checkout-metode" class="form-label">Metode Pembayaran</label>
+              <select id="checkout-metode" class="form-select" required>
+                <option value="">-- Pilih Metode Pembayaran --</option>
+                <option value="Transfer Bank">Transfer Bank (BCA / Mandiri / BNI)</option>
+                <option value="E-Wallet">E-Wallet (GoPay / OVO / Dana)</option>
+                <option value="COD">COD (Bayar Tunai di Tempat)</option>
+              </select>
+              <div id="error-checkout-metode" class="form-pesan-error"></div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="form-grup">
+                <label for="checkout-ekspedisi" class="form-label">Jasa Ekspedisi</label>
+                <select id="checkout-ekspedisi" class="form-select" required>
+                  <option value="">-- Pilih Ekspedisi --</option>
+                  <option value="JNE">JNE Express</option>
+                  <option value="J&T Express">J&amp;T Express</option>
+                  <option value="SiCepat">SiCepat</option>
+                  <option value="Pos Indonesia">Pos Indonesia</option>
+                </select>
+                <div id="error-checkout-ekspedisi" class="form-pesan-error"></div>
+              </div>
+
+              <div class="form-grup">
+                <label for="checkout-paket" class="form-label">Jenis Layanan</label>
+                <select id="checkout-paket" class="form-select">
+                  <option value="Reguler">Reguler (2-3 Hari)</option>
+                  <option value="Express">Express (1 Hari)</option>
+                  <option value="Kilat Khusus">Kilat Khusus</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top: 24px;">
+              <button type="submit" class="tombol tombol--utama tombol--penuh" style="font-size: 1rem; padding-top: 12px; padding-bottom: 12px;">
+                Pesan Sekarang &rarr;
+              </button>
+            </div>
+          </form>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal Konfirmasi Pesanan dengan Stempel & Nomor DO -->
+  <div id="modal-konfirmasi-pesanan" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="judul-modal-konfirmasi">
+    <div class="modal-kotak">
+      <button type="button" class="modal-tutup js-tutup-modal" aria-label="Tutup Modal">&times;</button>
+      <div class="modal-header">
+        <span class="label-kapital">Konfirmasi Pemesanan Berhasil</span>
+        <h2 id="judul-modal-konfirmasi" style="margin-top: 4px;">Surat Pesanan Dibuat</h2>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 24px; padding: 16px; background: var(--kertas); border: 2px dashed var(--tinta);">
+        <span class="stempel" style="margin-bottom: 8px;">TERCATAT RESMI</span>
+        <div class="label-kapital" style="margin-top: 8px;">Nomor Delivery Order</div>
+        <div id="modal-konfirmasi-do" style="font-size: 1.5rem; font-weight: 800; letter-spacing: 0.05em; color: var(--stempel); margin-top: 4px;">
+          DO-XXXX-XXXX
+        </div>
+      </div>
+
+      <div style="font-size: 0.875rem; line-height: 1.8; margin-bottom: 16px;">
+        <div><strong>Nama Pemesan:</strong> <span id="modal-konfirmasi-nama">-</span></div>
+        <div><strong>Total Pembayaran:</strong> <span id="modal-konfirmasi-total" class="angka-tabular">-</span></div>
+        <p class="teks-lembut" style="margin-top: 8px;">
+          Pesanan Anda telah dimasukkan ke dalam antrean gudang dan dapat dipantau setiap saat lewat halaman tracking.
+        </p>
+      </div>
+
+      <div class="modal-footer" style="display: flex; gap: 8px; justify-content: space-between;">
+        <button type="button" class="tombol tombol--sekunder js-tutup-modal">Tutup</button>
+        <a id="modal-konfirmasi-link-tracking" href="tracking.html" class="tombol tombol--utama">
+          Lacak Pengiriman Ini &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Identitas Pembuat Wajib di Footer Seluruh Halaman -->
+  <footer class="footer-toko">
+    <div class="kontainer">
+      <p class="footer-toko__teks">
+        Dibuat oleh Astian Handal Cahya Putra · NIM 312310527 · UTS Pemrograman Web 1
+      </p>
+    </div>
+  </footer>
+
+  <!-- File JavaScript -->
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
+

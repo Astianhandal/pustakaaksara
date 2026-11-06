@@ -1,0 +1,862 @@
+/* ==========================================================================
+   style.css — Stylesheet Utama Aplikasi Pemesanan Buku Toko Online
+   Tugas UTS Pemrograman Web 1
+   Identitas: Astian Handal Cahya Putra · NIM: 312310527
+   Konsep: "Kartu Katalog Perpustakaan" (Archival Index Card & Print Ledger)
+   Catatan Indikator: Ini adalah External CSS yang digunakan di seluruh halaman.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Variabel Desain (:root)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Palet Warna Inti (design.md) */
+  --kertas: #F4EFE3;        /* Latar utama bernuansa kertas arsip */
+  --kartu: #FFFDF7;         /* Permukaan kartu katalog, formulir, dan tabel */
+  --tinta: #16130F;         /* Teks utama, border 2px, dan bayangan keras */
+  --tinta-lembut: #6A6358;  /* Teks sekunder, keterangan, dan metadata */
+  --garis-tipis: #CFC6B3;   /* Garis pemisah baris tabel */
+  --stempel: #C8412B;       /* Aksen tunggal: tombol utama, status aktif, stempel, error */
+
+  /* Tipografi */
+  --font: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Skala Jarak Teratur */
+  --spasi-4: 4px;
+  --spasi-8: 8px;
+  --spasi-16: 16px;
+  --spasi-24: 24px;
+  --spasi-32: 32px;
+  --spasi-48: 48px;
+
+  /* Karakteristik Bentuk */
+  --border-tebal: 2px solid var(--tinta);
+  --bayangan-kartu: 4px 4px 0 var(--tinta);
+  --bayangan-ditekan: 2px 2px 0 var(--tinta);
+  --bayangan-modal: 8px 8px 0 var(--tinta);
+  --lebar-maksimal: 1040px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset dan Pengaturan Dasar
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  background-color: var(--kertas);
+  color: var(--tinta);
+}
+
+body {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: var(--kertas);
+  color: var(--tinta);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Aksesibilitas: Hormati preferensi pengurangan gerak */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fokus Keyboard Universal yang Tegas */
+:focus-visible {
+  outline: 3px solid var(--tinta);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Tipografi Semantik
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font);
+  color: var(--tinta);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 1.625rem;
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+p {
+  color: var(--tinta);
+}
+
+/* Label Kode, Metadata, dan Cap */
+.label-kapital {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tinta-lembut);
+}
+
+.teks-lembut {
+  color: var(--tinta-lembut);
+  font-size: 0.875rem;
+}
+
+.angka-tabular {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   4. Layout & Struktur Halaman
+   -------------------------------------------------------------------------- */
+.kontainer {
+  width: 100%;
+  max-width: var(--lebar-maksimal);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spasi-24);
+  padding-right: var(--spasi-24);
+}
+
+.main-konten {
+  flex: 1 0 auto;
+  padding-top: var(--spasi-32);
+  padding-bottom: var(--spasi-48);
+}
+
+/* Header & Navigasi Toko */
+.header-toko {
+  background-color: var(--kartu);
+  border-bottom: 4px double var(--tinta);
+  padding-top: var(--spasi-16);
+  padding-bottom: var(--spasi-16);
+}
+
+.header-toko__baris {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spasi-16);
+  flex-wrap: wrap;
+}
+
+.header-toko__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spasi-8);
+  text-decoration: none;
+  color: var(--tinta);
+}
+
+.header-toko__judul {
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.header-toko__subjudul {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--tinta-lembut);
+  text-transform: uppercase;
+}
+
+.nav-toko {
+  display: flex;
+  align-items: center;
+  gap: var(--spasi-8);
+  list-style: none;
+}
+
+.nav-toko__link {
+  display: inline-block;
+  padding: var(--spasi-8) var(--spasi-16);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--tinta);
+  border: 2px solid transparent;
+}
+
+.nav-toko__link:hover {
+  border-color: var(--tinta);
+  background-color: var(--kertas);
+}
+
+.nav-toko__link--aktif {
+  background-color: var(--tinta);
+  color: var(--kertas);
+  border: 2px solid var(--tinta);
+}
+
+.nav-toko__link--aktif:hover {
+  background-color: var(--tinta);
+  color: var(--kertas);
+}
+
+.nav-toko__btn-logout {
+  background-color: transparent;
+  cursor: pointer;
+  border: 2px solid var(--stempel);
+  color: var(--stempel);
+  padding: var(--spasi-8) var(--spasi-16);
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nav-toko__btn-logout:hover {
+  background-color: var(--stempel);
+  color: #FFFFFF;
+}
+
+/* Footer dengan Identitas Mahasiswa */
+.footer-toko {
+  margin-top: auto;
+  background-color: var(--kartu);
+  border-top: 4px double var(--tinta);
+  padding-top: var(--spasi-24);
+  padding-bottom: var(--spasi-24);
+  text-align: center;
+}
+
+.footer-toko__teks {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tinta-lembut);
+}
+
+/* --------------------------------------------------------------------------
+   5. Komponen: Tombol
+   -------------------------------------------------------------------------- */
+.tombol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: var(--spasi-8) var(--spasi-16);
+  border: var(--border-tebal);
+  cursor: pointer;
+  text-decoration: none;
+  background-color: var(--kartu);
+  color: var(--tinta);
+  box-shadow: var(--bayangan-kartu);
+  min-height: 44px;
+}
+
+.tombol:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--bayangan-ditekan);
+}
+
+.tombol--utama {
+  background-color: var(--stempel);
+  color: #FFFFFF;
+}
+
+.tombol--utama:hover {
+  background-color: #B23520;
+}
+
+.tombol--sekunder {
+  background-color: var(--kartu);
+  color: var(--tinta);
+}
+
+.tombol--sekunder:hover {
+  background-color: var(--kertas);
+}
+
+.tombol--bahaya {
+  background-color: var(--kartu);
+  color: var(--stempel);
+  border-color: var(--stempel);
+}
+
+.tombol--bahaya:hover {
+  background-color: var(--stempel);
+  color: #FFFFFF;
+}
+
+.tombol--kecil {
+  font-size: 0.75rem;
+  padding: var(--spasi-4) var(--spasi-8);
+  min-height: 32px;
+}
+
+.tombol--penuh {
+  width: 100%;
+}
+
+.tombol-tautan {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--tinta);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tombol-tautan:hover {
+  color: var(--stempel);
+}
+
+/* --------------------------------------------------------------------------
+   6. Komponen: Form & Input
+   -------------------------------------------------------------------------- */
+.form-grup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spasi-4);
+  margin-bottom: var(--spasi-16);
+  text-align: left;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tinta);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: var(--spasi-8) var(--spasi-16);
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  color: var(--tinta);
+  min-height: 44px;
+  width: 100%;
+  border-radius: 0;
+}
+
+.form-textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  box-shadow: 3px 3px 0 var(--tinta);
+}
+
+.form-input--error,
+.form-select--error {
+  border-color: var(--stempel);
+}
+
+.form-pesan-error {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--stempel);
+  margin-top: var(--spasi-4);
+  display: none;
+}
+
+.form-pesan-error--tampil {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   7. Komponen: Kartu Indeks & Kotak Dokumen
+   -------------------------------------------------------------------------- */
+.kartu-arsip {
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-kartu);
+  padding: var(--spasi-24);
+}
+
+.kartu-arsip--bergaris {
+  border-top: 8px solid var(--tinta);
+}
+
+.kartu-arsip__header {
+  border-bottom: 2px solid var(--tinta);
+  padding-bottom: var(--spasi-8);
+  margin-bottom: var(--spasi-16);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+/* --------------------------------------------------------------------------
+   8. Komponen: Tabel Buku Besar (Ledger Table)
+   -------------------------------------------------------------------------- */
+.tabel-pembungkus {
+  width: 100%;
+  overflow-x: auto;
+  border: var(--border-tebal);
+  background-color: var(--kartu);
+  box-shadow: var(--bayangan-kartu);
+}
+
+.tabel-ledger {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.875rem;
+}
+
+.tabel-ledger th {
+  background-color: var(--tinta);
+  color: var(--kertas);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--spasi-16);
+  border-right: 1px solid var(--tinta-lembut);
+}
+
+.tabel-ledger th:last-child {
+  border-right: none;
+}
+
+.tabel-ledger td {
+  padding: var(--spasi-16);
+  border-bottom: 1px solid var(--garis-tipis);
+  border-right: 1px solid var(--garis-tipis);
+  color: var(--tinta);
+  vertical-align: middle;
+}
+
+.tabel-ledger td:last-child {
+  border-right: none;
+}
+
+.tabel-ledger tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabel-ledger tbody tr:hover {
+  background-color: #FAF6ED;
+}
+
+.tabel-sampul {
+  width: 48px;
+  height: 64px;
+  object-fit: cover;
+  border: var(--border-tebal);
+  display: block;
+}
+
+.baris-baru-sorot {
+  animation: sorotBaris 2s ease-out;
+}
+
+@keyframes sorotBaris {
+  0% { background-color: #FFE6D5; }
+  100% { background-color: transparent; }
+}
+
+/* --------------------------------------------------------------------------
+   9. Komponen: Stempel Status (Library Rubber Stamp)
+   -------------------------------------------------------------------------- */
+.stempel {
+  display: inline-block;
+  border: 2px solid var(--stempel);
+  color: var(--stempel);
+  font-weight: 800;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px var(--spasi-8);
+  transform: rotate(-3deg);
+  line-height: 1.2;
+}
+
+.stempel--tinta {
+  border-color: var(--tinta);
+  color: var(--tinta);
+}
+
+/* --------------------------------------------------------------------------
+   10. Komponen: Modal (Secarik Kertas Dialog)
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(22, 19, 15, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spasi-16);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+}
+
+.modal-overlay--buka {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-kotak {
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-modal);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: var(--spasi-24);
+}
+
+.modal-kotak--lebar {
+  max-width: 720px;
+}
+
+.modal-tutup {
+  position: absolute;
+  top: var(--spasi-16);
+  right: var(--spasi-16);
+  width: 32px;
+  height: 32px;
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  font-size: 1.125rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tinta);
+}
+
+.modal-tutup:hover {
+  background-color: var(--stempel);
+  color: #FFFFFF;
+}
+
+.modal-header {
+  border-bottom: 2px solid var(--tinta);
+  padding-bottom: var(--spasi-8);
+  margin-bottom: var(--spasi-16);
+  padding-right: var(--spasi-32);
+}
+
+.modal-footer {
+  margin-top: var(--spasi-24);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spasi-8);
+  border-top: 1px solid var(--garis-tipis);
+  padding-top: var(--spasi-16);
+}
+
+/* Toast Notifikasi Ringkas */
+.toast-notifikasi {
+  position: fixed;
+  bottom: var(--spasi-24);
+  right: var(--spasi-24);
+  background-color: var(--tinta);
+  color: var(--kertas);
+  padding: var(--spasi-16) var(--spasi-24);
+  border: 2px solid var(--kertas);
+  box-shadow: var(--bayangan-kartu);
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 1100;
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   11. Halaman: Login (index.html)
+   -------------------------------------------------------------------------- */
+.halaman-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 160px);
+}
+
+.kartu-masuk {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-kartu);
+  padding: var(--spasi-32);
+  border-top: 8px solid var(--tinta);
+}
+
+.kartu-masuk__header {
+  text-align: center;
+  margin-bottom: var(--spasi-24);
+  border-bottom: 2px solid var(--tinta);
+  padding-bottom: var(--spasi-16);
+}
+
+.kartu-masuk__tautan {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spasi-16);
+  padding-top: var(--spasi-16);
+  border-top: 1px solid var(--garis-tipis);
+}
+
+/* --------------------------------------------------------------------------
+   12. Halaman: Dashboard (dashboard.html)
+   -------------------------------------------------------------------------- */
+.dashboard-hero {
+  margin-bottom: var(--spasi-32);
+  border-bottom: 2px solid var(--tinta);
+  padding-bottom: var(--spasi-16);
+}
+
+.dashboard-hero__greeting {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: var(--spasi-4);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spasi-24);
+}
+
+.kartu-menu {
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-kartu);
+  padding: var(--spasi-24);
+  text-decoration: none;
+  color: var(--tinta);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  position: relative;
+  cursor: pointer;
+}
+
+.kartu-menu:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--tinta);
+}
+
+.kartu-menu:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--bayangan-ditekan);
+}
+
+.kartu-menu__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spasi-16);
+}
+
+.kartu-menu__angka {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--stempel);
+}
+
+.kartu-menu__judul {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: var(--spasi-4);
+}
+
+.kartu-menu__deskripsi {
+  font-size: 0.875rem;
+  color: var(--tinta-lembut);
+}
+
+/* --------------------------------------------------------------------------
+   13. Halaman: Stok (stok.html)
+   -------------------------------------------------------------------------- */
+.stok-header-aksi {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--spasi-16);
+  margin-bottom: var(--spasi-24);
+  border-bottom: 2px solid var(--tinta);
+  padding-bottom: var(--spasi-8);
+}
+
+.form-tambah-stok {
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-kartu);
+  padding: var(--spasi-24);
+  margin-top: var(--spasi-32);
+}
+
+.grid-form-stok {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spasi-16);
+}
+
+/* --------------------------------------------------------------------------
+   14. Halaman: Checkout / Pemesanan (checkout.html)
+   -------------------------------------------------------------------------- */
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--spasi-32);
+}
+
+.checkout-nota {
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-kartu);
+  padding: var(--spasi-24);
+}
+
+.checkout-nota__total {
+  border-top: 2px dashed var(--tinta);
+  margin-top: var(--spasi-16);
+  padding-top: var(--spasi-16);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.checkout-nota__angka-total {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: var(--stempel);
+}
+
+/* --------------------------------------------------------------------------
+   15. Halaman: Tracking (tracking.html)
+   -------------------------------------------------------------------------- */
+.tracking-cari-box {
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-kartu);
+  padding: var(--spasi-24);
+  margin-bottom: var(--spasi-32);
+}
+
+.tracking-cari-form {
+  display: flex;
+  gap: var(--spasi-8);
+}
+
+.tracking-hasil {
+  background-color: var(--kartu);
+  border: var(--border-tebal);
+  box-shadow: var(--bayangan-kartu);
+  padding: var(--spasi-32);
+  border-top: 8px solid var(--tinta);
+}
+
+.tracking-badge-list {
+  display: flex;
+  gap: var(--spasi-8);
+  flex-wrap: wrap;
+  margin-top: var(--spasi-8);
+}
+
+.tracking-badge {
+  background-color: var(--kertas);
+  border: 1px solid var(--tinta);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px var(--spasi-8);
+  cursor: pointer;
+}
+
+.tracking-badge:hover {
+  background-color: var(--tinta);
+  color: var(--kertas);
+}
+
+/* --------------------------------------------------------------------------
+   16. Responsif (Titik Patah 768px sesuai design.md)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .kontainer {
+    padding-left: var(--spasi-16);
+    padding-right: var(--spasi-16);
+  }
+
+  h1 {
+    font-size: 1.875rem;
+  }
+
+  .header-toko__baris {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .nav-toko {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-form-stok {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tracking-cari-form {
+    flex-direction: column;
+  }
+}
+

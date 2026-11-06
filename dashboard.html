@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Pustaka Aksara</title>
+  <!-- Font Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet Utama (External CSS) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-halaman="dashboard">
+
+  <!-- Header & Navigasi Toko -->
+  <header class="header-toko">
+    <div class="kontainer header-toko__baris">
+      <a href="dashboard.html" class="header-toko__logo">
+        <div>
+          <div class="header-toko__judul">Pustaka Aksara</div>
+          <div class="header-toko__subjudul">Kartu Katalog Perpustakaan &amp; Arsip Buku</div>
+        </div>
+      </a>
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-toko">
+          <li><a href="dashboard.html" class="nav-toko__link nav-toko__link--aktif" aria-current="page">Dashboard</a></li>
+          <li><a href="stok.html" class="nav-toko__link">Stok / Katalog</a></li>
+          <li><a href="checkout.html" class="nav-toko__link">Pemesanan</a></li>
+          <li><a href="tracking.html" class="nav-toko__link">Tracking</a></li>
+          <li><button type="button" id="btn-logout-header" class="nav-toko__btn-logout">Keluar</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Konten Utama Dashboard -->
+  <main class="main-konten">
+    <div class="kontainer">
+      
+      <!-- Bagian Greeting Dinamis Berdasarkan Waktu -->
+      <section class="dashboard-hero" aria-labelledby="dashboard-greeting">
+        <span class="label-kapital">Panel Kendali Utama</span>
+        <h1 id="dashboard-greeting" class="dashboard-hero__greeting">Selamat datang.</h1>
+        <p class="teks-lembut">Pilih menu kartu indeks di bawah untuk mengelola inventaris, pesanan, atau melacak pengiriman paket buku.</p>
+      </section>
+
+      <!-- Grid 4 Menu Kartu Indeks (2x2) -->
+      <section aria-label="Menu Aplikasi">
+        <div class="dashboard-grid">
+          
+          <!-- Kartu 01: Stok / Katalog -->
+          <a href="stok.html" class="kartu-menu">
+            <div class="kartu-menu__header">
+              <span class="label-kapital">Inventaris &amp; Etalase</span>
+              <span class="kartu-menu__angka">01</span>
+            </div>
+            <div>
+              <h2 class="kartu-menu__judul">Informasi Stok / Katalog</h2>
+              <p class="kartu-menu__deskripsi">Lihat seluruh buku tercatat, periksa sisa stok, dan tambahkan judul buku baru ke sistem.</p>
+            </div>
+            <div style="margin-top: 16px;">
+              <span class="label-kapital" style="color: var(--tinta); font-weight: 800;">Buka Katalog &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Kartu 02: Tracking Pengiriman -->
+          <a href="tracking.html" class="kartu-menu">
+            <div class="kartu-menu__header">
+              <span class="label-kapital">Pelacakan Logistik</span>
+              <span class="kartu-menu__angka">02</span>
+            </div>
+            <div>
+              <h2 class="kartu-menu__judul">Tracking Pengiriman</h2>
+              <p class="kartu-menu__deskripsi">Lacak posisi pesanan buku secara bertahap menggunakan nomor Delivery Order.</p>
+            </div>
+            <div style="margin-top: 16px;">
+              <span class="label-kapital" style="color: var(--tinta); font-weight: 800;">Lacak Pengiriman &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Kartu 03: Laporan Pemesanan (Membuka Modal) -->
+          <div id="btn-menu-laporan" class="kartu-menu" role="button" tabindex="0">
+            <div class="kartu-menu__header">
+              <span class="label-kapital">Rekapitulasi Order</span>
+              <span class="kartu-menu__angka">03</span>
+            </div>
+            <div>
+              <h2 class="kartu-menu__judul">Laporan Pemesanan</h2>
+              <p class="kartu-menu__deskripsi">Buka ringkasan seluruh daftar pesanan yang masuk beserta metode pembayaran dan nominal.</p>
+            </div>
+            <div style="margin-top: 16px;">
+              <span class="label-kapital" style="color: var(--tinta); font-weight: 800;">Lihat Laporan &rarr;</span>
+            </div>
+          </div>
+
+          <!-- Kartu 04: History Transaksi (Membuka Modal) -->
+          <div id="btn-menu-history" class="kartu-menu" role="button" tabindex="0">
+            <div class="kartu-menu__header">
+              <span class="label-kapital">Arsip Finansial</span>
+              <span class="kartu-menu__angka">04</span>
+            </div>
+            <div>
+              <h2 class="kartu-menu__judul">History Transaksi</h2>
+              <p class="kartu-menu__deskripsi">Riwayat transaksi pemesanan buku lengkap dengan volume eksemplar dan total tagihan.</p>
+            </div>
+            <div style="margin-top: 16px;">
+              <span class="label-kapital" style="color: var(--tinta); font-weight: 800;">Lihat Transaksi &rarr;</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Modal: Laporan Pemesanan (Tabel Ringkas) -->
+  <div id="modal-laporan" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="judul-modal-laporan">
+    <div class="modal-kotak modal-kotak--lebar">
+      <button type="button" class="modal-tutup js-tutup-modal" aria-label="Tutup Modal">&times;</button>
+      <div class="modal-header">
+        <span class="label-kapital">Rekapitulasi Data</span>
+        <h2 id="judul-modal-laporan">Laporan Pemesanan Buku</h2>
+      </div>
+      <p class="teks-lembut" style="margin-bottom: 16px;">Daftar seluruh pesanan yang tercatat dalam berkas data aplikasi.</p>
+      <div id="kontainer-tabel-laporan" class="tabel-pembungkus"></div>
+      <div class="modal-footer">
+        <button type="button" class="tombol tombol--utama js-tutup-modal">Tutup Laporan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: History Transaksi (Tabel Transaksi) -->
+  <div id="modal-history" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="judul-modal-history">
+    <div class="modal-kotak modal-kotak--lebar">
+      <button type="button" class="modal-tutup js-tutup-modal" aria-label="Tutup Modal">&times;</button>
+      <div class="modal-header">
+        <span class="label-kapital">Arsip Keuangan</span>
+        <h2 id="judul-modal-history">History Transaksi Pemesanan</h2>
+      </div>
+      <p class="teks-lembut" style="margin-bottom: 16px;">Catatan transaksi buku yang telah diselesaikan maupun dalam proses.</p>
+      <div id="kontainer-tabel-history" class="tabel-pembungkus"></div>
+      <div class="modal-footer">
+        <button type="button" class="tombol tombol--utama js-tutup-modal">Tutup Transaksi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Identitas Pembuat Wajib di Footer Seluruh Halaman -->
+  <footer class="footer-toko">
+    <div class="kontainer">
+      <p class="footer-toko__teks">
+        Dibuat oleh Astian Handal Cahya Putra · NIM 312310527 · UTS Pemrograman Web 1
+      </p>
+    </div>
+  </footer>
+
+  <!-- File JavaScript -->
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
+

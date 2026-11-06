@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracking Pengiriman — Pustaka Aksara</title>
+  <!-- Font Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet Utama (External CSS) -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- =========================================================================
+       INDIKATOR PENILAIAN DOSEN: INTERNAL CSS
+       Blok <style> di bawah ini digunakan khusus untuk mengatur gaya tiket
+       dan tahapan progress pelacakan pengiriman sesuai aturan pada design.md.
+       ========================================================================= -->
+  <style>
+    /* Jalur pembungkus tahapan pengiriman tiket */
+    .tiket-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      margin: 32px 0;
+      padding: 0 16px;
+    }
+
+    /* Garis putus-putus penghubung antar titik langkah */
+    .tiket-progress::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 32px;
+      right: 32px;
+      height: 2px;
+      border-top: 2px dashed var(--tinta);
+      z-index: 1;
+    }
+
+    /* Setiap simpul tahapan pengiriman */
+    .tiket-step {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 90px;
+    }
+
+    /* Lingkaran penanda status */
+    .tiket-step__titik {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid var(--tinta);
+      background-color: var(--kartu);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      transition: background-color 150ms ease;
+    }
+
+    /* Langkah yang telah selesai */
+    .tiket-step__titik--selesai {
+      background-color: var(--tinta);
+      color: var(--kertas);
+    }
+
+    /* Langkah yang sedang berlangsung aktif */
+    .tiket-step__titik--aktif {
+      background-color: var(--stempel);
+      border-color: var(--stempel);
+      color: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(200, 65, 43, 0.2);
+    }
+
+    /* Langkah yang belum ditempuh */
+    .tiket-step__titik--belum {
+      background-color: var(--kertas);
+      color: var(--tinta-lembut);
+      border-color: var(--garis-tipis);
+    }
+
+    /* Label keterangan di bawah lingkaran */
+    .tiket-step__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.3;
+      color: var(--tinta);
+    }
+
+    /* Penyesuaian responsif layar HP: progress tiket menjadi vertikal */
+    @media (max-width: 768px) {
+      .tiket-progress {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 20px;
+        gap: 24px;
+      }
+      .tiket-progress::before {
+        top: 20px;
+        bottom: 20px;
+        left: 36px;
+        width: 2px;
+        height: auto;
+        border-top: none;
+        border-left: 2px dashed var(--tinta);
+      }
+      .tiket-step {
+        flex-direction: row;
+        max-width: 100%;
+        gap: 16px;
+        text-align: left;
+      }
+      .tiket-step__titik {
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+    }
+  </style>
+</head>
+<body data-halaman="tracking">
+
+  <!-- Header & Navigasi Toko -->
+  <header class="header-toko">
+    <div class="kontainer header-toko__baris">
+      <a href="dashboard.html" class="header-toko__logo">
+        <div>
+          <div class="header-toko__judul">Pustaka Aksara</div>
+          <div class="header-toko__subjudul">Kartu Katalog Perpustakaan &amp; Arsip Buku</div>
+        </div>
+      </a>
+      <nav aria-label="Navigasi Utama">
+        <ul class="nav-toko">
+          <li><a href="dashboard.html" class="nav-toko__link">Dashboard</a></li>
+          <li><a href="stok.html" class="nav-toko__link">Stok / Katalog</a></li>
+          <li><a href="checkout.html" class="nav-toko__link">Pemesanan</a></li>
+          <li><a href="tracking.html" class="nav-toko__link nav-toko__link--aktif" aria-current="page">Tracking</a></li>
+          <li><button type="button" id="btn-logout-header" class="nav-toko__btn-logout">Keluar</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Konten Utama Halaman Tracking -->
+  <main class="main-konten">
+    <div class="kontainer">
+
+      <header style="margin-bottom: 24px; border-bottom: 2px solid var(--tinta); padding-bottom: 8px;">
+        <span class="label-kapital">Pelacakan Logistik &amp; Ekspedisi</span>
+        <h1 style="font-size: 2rem;">Tracking Status Pengiriman</h1>
+      </header>
+
+      <!-- Kotak Pencarian Nomor Delivery Order -->
+      <section class="tracking-cari-box" aria-labelledby="judul-cari-do">
+        <h2 id="judul-cari-do" class="label-kapital" style="margin-bottom: 8px;">Pencarian Dokumen Pengiriman</h2>
+        <form id="form-tracking" class="tracking-cari-form" novalidate>
+          <div style="flex: 1;">
+            <label for="input-nomor-do" class="visually-hidden" style="display:none;">Nomor Delivery Order</label>
+            <input type="text" id="input-nomor-do" class="form-input" placeholder="Masukkan Nomor DO (misal: DO-2026-0001)" required>
+          </div>
+          <button type="submit" class="tombol tombol--utama">
+            Cari Pengiriman
+          </button>
+        </form>
+
+        <!-- Shortcut DO untuk mempermudah pengujian oleh dosen/penguji -->
+        <div style="margin-top: 16px;">
+          <span class="label-kapital" style="display: block; margin-bottom: 4px;">Contoh Nomor DO Tersedia (Klik untuk Cek):</span>
+          <div class="tracking-badge-list">
+            <button type="button" class="tracking-badge js-klik-do" data-do="DO-2026-0001">DO-2026-0001 (Diterima)</button>
+            <button type="button" class="tracking-badge js-klik-do" data-do="DO-2026-0002">DO-2026-0002 (Dalam Perjalanan)</button>
+            <button type="button" class="tracking-badge js-klik-do" data-do="DO-2026-0003">DO-2026-0003 (Dikemas)</button>
+            <button type="button" class="tracking-badge js-klik-do" data-do="DO-2026-0004">DO-2026-0004 (Diproses)</button>
+          </div>
+        </div>
+
+        <!-- Pesan Error Pencarian -->
+        <!-- Catatan Indikator: Contoh Inline CSS untuk indikator soal UTS -->
+        <div id="tracking-pesan-error" class="form-pesan-error" style="display: none; margin-top: 12px;" role="alert"></div>
+      </section>
+
+      <!-- Hasil Tracking Pengiriman (Tiket Arsip) -->
+      <!-- Catatan Indikator: Contoh Inline CSS (style="display: none;") pada kontainer hasil awal -->
+      <section id="kontainer-hasil-tracking" class="tracking-hasil" style="display: none;" aria-labelledby="judul-hasil-tracking">
+        <div class="kartu-arsip__header">
+          <div>
+            <span class="label-kapital">Surat Jalan Pengiriman</span>
+            <h2 id="judul-hasil-tracking" style="font-size: 1.5rem; margin-top: 4px;">
+              <span id="hasil-nama-pemesan">-</span>
+            </h2>
+            <div class="label-kapital" style="color: var(--stempel); margin-top: 4px;">
+              Nomor DO: <strong id="hasil-nomor-do" style="letter-spacing: 0.08em;">-</strong>
+            </div>
+          </div>
+          <!-- Area Stempel Status -->
+          <div id="area-stempel-diterima"></div>
+        </div>
+
+        <!-- Tiket Progres Pengiriman Bertahap (Menggunakan Internal CSS) -->
+        <div id="kontainer-tiket-progress" class="tiket-progress">
+          <!-- Dirender dinamis oleh script.js -->
+        </div>
+
+        <!-- Tabel Detail Dua Kolom Sesuai design.md -->
+        <div style="margin-top: 32px; border-top: 2px solid var(--tinta); padding-top: 16px;">
+          <h3 class="label-kapital" style="margin-bottom: 12px; font-size: 0.8125rem;">Rincian Logistik Pengiriman</h3>
+          <div class="tabel-pembungkus" style="box-shadow: none;">
+            <table class="tabel-ledger">
+              <tbody>
+                <tr>
+                  <th scope="row" style="width: 200px; background-color: var(--kertas); color: var(--tinta);">Jasa Ekspedisi</th>
+                  <td id="hasil-ekspedisi">-</td>
+                </tr>
+                <tr>
+                  <th scope="row" style="background-color: var(--kertas); color: var(--tinta);">Jenis Paket Layanan</th>
+                  <td id="hasil-paket">-</td>
+                </tr>
+                <tr>
+                  <th scope="row" style="background-color: var(--kertas); color: var(--tinta);">Tanggal Pengiriman</th>
+                  <td id="hasil-tanggal">-</td>
+                </tr>
+                <tr>
+                  <th scope="row" style="background-color: var(--kertas); color: var(--tinta);">Total Pembayaran</th>
+                  <td id="hasil-total" class="angka-tabular" style="font-weight: 800; color: var(--stempel);">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Identitas Pembuat Wajib di Footer Seluruh Halaman -->
+  <footer class="footer-toko">
+    <div class="kontainer">
+      <p class="footer-toko__teks">
+        Dibuat oleh Astian Handal Cahya Putra · NIM 312310527 · UTS Pemrograman Web 1
+      </p>
+    </div>
+  </footer>
+
+  <!-- File JavaScript -->
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kartu Masuk — Pustaka Aksara</title>
+  <!-- Font Montserrat sesuai panduan design.md -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet Utama (External CSS) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-halaman="login">
+
+  <!-- Header Sederhana Halaman Masuk -->
+  <header class="header-toko">
+    <div class="kontainer header-toko__baris">
+      <a href="index.html" class="header-toko__logo">
+        <div>
+          <div class="header-toko__judul">Pustaka Aksara</div>
+          <div class="header-toko__subjudul">Kartu Katalog Perpustakaan &amp; Arsip Buku</div>
+        </div>
+      </a>
+      <span class="label-kapital">Sesi Belum Masuk</span>
+    </div>
+  </header>
+
+  <!-- Area Konten Utama Form Login (Kartu Anggota) -->
+  <main class="main-konten">
+    <div class="kontainer halaman-login">
+      <section class="kartu-masuk" aria-labelledby="judul-kartu-masuk">
+        <header class="kartu-masuk__header">
+          <span class="label-kapital">Formulir Masuk Sistem</span>
+          <h1 id="judul-kartu-masuk" style="font-size: 1.75rem; margin-top: 4px;">Kartu Masuk</h1>
+          <p class="teks-lembut" style="margin-top: 4px;">Silakan masukkan identitas akun Anda.</p>
+        </header>
+
+        <!-- Pesan Error Validasi Form -->
+        <div id="login-pesan-error" class="form-pesan-error" role="alert"></div>
+
+        <form id="form-login" novalidate>
+          <div class="form-grup">
+            <label for="login-email" class="form-label">Alamat Email</label>
+            <input type="email" id="login-email" class="form-input" placeholder="contoh: astian@mail.com" required autocomplete="email">
+          </div>
+
+          <div class="form-grup">
+            <label for="login-password" class="form-label">Kata Sandi</label>
+            <input type="password" id="login-password" class="form-input" placeholder="Masukkan password" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" class="tombol tombol--utama tombol--penuh" style="margin-top: 8px;">
+            Masuk ke Sistem
+          </button>
+        </form>
+
+        <div class="kartu-masuk__tautan">
+          <button type="button" id="btn-buka-lupa-password" class="tombol-tautan">Lupa Password?</button>
+          <button type="button" id="btn-buka-daftar" class="tombol-tautan">Daftar Akun Baru</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Modal: Lupa Password -->
+  <div id="modal-lupa-password" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="judul-modal-lupa">
+    <div class="modal-kotak">
+      <button type="button" class="modal-tutup js-tutup-modal" aria-label="Tutup Modal">&times;</button>
+      <div class="modal-header">
+        <span class="label-kapital">Pemulihan Akun</span>
+        <h2 id="judul-modal-lupa">Lupa Sandi Akun</h2>
+      </div>
+      <p class="teks-lembut" style="margin-bottom: 16px;">
+        Masukkan alamat email yang terdaftar. Sistem akan mengirimkan instruksi pengaturan sandi baru secara instan.
+      </p>
+      <form id="form-lupa-password">
+        <div class="form-grup">
+          <label for="lupa-email" class="form-label">Email Terdaftar</label>
+          <input type="email" id="lupa-email" class="form-input" placeholder="nama@mail.com" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="tombol tombol--sekunder js-tutup-modal">Batal</button>
+          <button type="submit" class="tombol tombol--utama">Kirim Instruksi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Pendaftaran Akun Baru -->
+  <div id="modal-daftar" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="judul-modal-daftar">
+    <div class="modal-kotak">
+      <button type="button" class="modal-tutup js-tutup-modal" aria-label="Tutup Modal">&times;</button>
+      <div class="modal-header">
+        <span class="label-kapital">Registrasi Anggota</span>
+        <h2 id="judul-modal-daftar">Buat Akun Baru</h2>
+      </div>
+      <form id="form-daftar">
+        <div class="form-grup">
+          <label for="daftar-nama" class="form-label">Nama Lengkap</label>
+          <input type="text" id="daftar-nama" class="form-input" placeholder="Nama lengkap Anda" required>
+        </div>
+        <div class="form-grup">
+          <label for="daftar-email" class="form-label">Alamat Email</label>
+          <input type="email" id="daftar-email" class="form-input" placeholder="nama@mail.com" required>
+        </div>
+        <div class="form-grup">
+          <label for="daftar-password" class="form-label">Kata Sandi Baru</label>
+          <input type="password" id="daftar-password" class="form-input" placeholder="Minimal 6 karakter" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="tombol tombol--sekunder js-tutup-modal">Batal</button>
+          <button type="submit" class="tombol tombol--utama">Daftar Sekarang</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Identitas Pembuat Wajib di Footer Seluruh Halaman -->
+  <footer class="footer-toko">
+    <div class="kontainer">
+      <p class="footer-toko__teks">
+        Dibuat oleh Astian Handal Cahya Putra · NIM 312310527 · UTS Pemrograman Web 1
+      </p>
+    </div>
+  </footer>
+
+  <!-- File JavaScript -->
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
+
