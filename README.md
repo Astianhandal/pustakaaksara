@@ -130,3 +130,27 @@ Aplikasi ini tidak memerlukan instalasi *web server* (*Apache/Node.js/Nginx*) ma
 2. Klik dua kali pada berkas **`index.html`** untuk membukanya pada peramban web modern (Google Chrome, Microsoft Edge, Mozilla Firefox, dll.).
 3. Pastikan perangkat terhubung ke internet saat pertama kali dibuka untuk memuat font *Montserrat* dari Google Fonts (tersedia *fallback* sistem font lokal).
 
+---
+
+## 7. Dokumentasi Tangkapan Layar (Screenshots)
+
+Seluruh tangkapan layar proses aplikasi telah disimpan dalam folder [`screenshots/`](screenshots/):
+
+| No | Berkas Gambar | Keterangan Proses |
+|:--:|:---|:---|
+| 01 | `01-halaman-login.png` | Tampilan awal Formulir Masuk Sistem (Kartu Masuk). |
+| 02 | `02-login-modal-lupa-password.png` | Dialog modal pemulihan sandi terpasang. |
+| 03 | `03-login-modal-daftar-akun.png` | Dialog modal registrasi akun anggota baru. |
+| 04 | `04-dashboard-utama.png` | Dashboard utama dengan sapaan waktu otomatis & 4 kartu menu indeks. |
+| 05 | `05-dashboard-modal-laporan.png` | Modal Rekapitulasi Laporan Pemesanan buku. |
+| 06 | `06-dashboard-modal-transaksi.png` | Modal Arsip History Transaksi pemesanan. |
+| 07 | `07-katalog-stok-utama.png` | Tabel buku besar katalog inventaris & indikator stempel HABIS. |
+| 08 | `08-katalog-tambah-buku-sukses.png` | Hasil penambahan buku baru secara dinamis ke dalam tabel DOM. |
+| 09 | `09-checkout-nota-dan-form.png` | Halaman Checkout dengan nota rincian belanja & formulir pengiriman. |
+| 10 | `10-checkout-validasi-error.png` | Penanganan validasi kesalahan pada formulir pemesanan. |
+| 11 | `11-checkout-modal-konfirmasi-do.png` | Modal konfirmasi surat pesanan dibuat lengkap dengan nomor DO & stempel. |
+| 12 | `12-tracking-pencarian-sukses.png` | Hasil pelacakan sukses: progres tiket 5 tahap & stempel DITERIMA. |
+| 13 | `13-tracking-nomor-do-tidak-ditemukan.png` | Validasi pesan kesalahan saat nomor DO tidak ditemukan dalam data. |
+| 14 | `14-responsif-mobile-dashboard.png` | Tampilan responsif pada resolusi perangkat bergerak (Mobile 375px). |
+| 15 | `15-responsif-mobile-tracking.png` | Tampilan responsif tahapan progres tiket vertikal pada layar Mobile (375px). |
+
