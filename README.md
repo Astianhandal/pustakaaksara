@@ -134,23 +134,87 @@ Aplikasi ini tidak memerlukan instalasi *web server* (*Apache/Node.js/Nginx*) ma
 
 ## 7. Dokumentasi Tangkapan Layar (Screenshots)
 
-Seluruh tangkapan layar proses aplikasi telah disimpan dalam folder [`screenshots/`](screenshots/):
+Berikut adalah dokumentasi visual seluruh proses dan alur fitur aplikasi saat dijalankan:
 
-| No | Berkas Gambar | Keterangan Proses |
-|:--:|:---|:---|
-| 01 | `01-halaman-login.png` | Tampilan awal Formulir Masuk Sistem (Kartu Masuk). |
-| 02 | `02-login-modal-lupa-password.png` | Dialog modal pemulihan sandi terpasang. |
-| 03 | `03-login-modal-daftar-akun.png` | Dialog modal registrasi akun anggota baru. |
-| 04 | `04-dashboard-utama.png` | Dashboard utama dengan sapaan waktu otomatis & 4 kartu menu indeks. |
-| 05 | `05-dashboard-modal-laporan.png` | Modal Rekapitulasi Laporan Pemesanan buku. |
-| 06 | `06-dashboard-modal-transaksi.png` | Modal Arsip History Transaksi pemesanan. |
-| 07 | `07-katalog-stok-utama.png` | Tabel buku besar katalog inventaris & indikator stempel HABIS. |
-| 08 | `08-katalog-tambah-buku-sukses.png` | Hasil penambahan buku baru secara dinamis ke dalam tabel DOM. |
-| 09 | `09-checkout-nota-dan-form.png` | Halaman Checkout dengan nota rincian belanja & formulir pengiriman. |
-| 10 | `10-checkout-validasi-error.png` | Penanganan validasi kesalahan pada formulir pemesanan. |
-| 11 | `11-checkout-modal-konfirmasi-do.png` | Modal konfirmasi surat pesanan dibuat lengkap dengan nomor DO & stempel. |
-| 12 | `12-tracking-pencarian-sukses.png` | Hasil pelacakan sukses: progres tiket 5 tahap & stempel DITERIMA. |
-| 13 | `13-tracking-nomor-do-tidak-ditemukan.png` | Validasi pesan kesalahan saat nomor DO tidak ditemukan dalam data. |
-| 14 | `14-responsif-mobile-dashboard.png` | Tampilan responsif pada resolusi perangkat bergerak (Mobile 375px). |
-| 15 | `15-responsif-mobile-tracking.png` | Tampilan responsif tahapan progres tiket vertikal pada layar Mobile (375px). |
+### 7.1 Halaman Login & Autentikasi (`index.html`)
+
+#### 1. Formulir Masuk Sistem (Kartu Masuk)
+Tampilan kartu identitas masuk di tengah layar dengan gaya kertas arsip:
+![01 - Halaman Login](screenshots/01-halaman-login.png)
+
+#### 2. Dialog Modal Lupa Password
+Fitur pemulihan sandi interaktif:
+![02 - Modal Lupa Password](screenshots/02-login-modal-lupa-password.png)
+
+#### 3. Dialog Modal Registrasi Akun Baru
+Pendaftaran anggota baru yang langsung tersimpan ke data sistem:
+![03 - Modal Daftar Akun](screenshots/03-login-modal-daftar-akun.png)
+
+---
+
+### 7.2 Halaman Dashboard (`dashboard.html`)
+
+#### 4. Panel Kendali Utama & Sapaan Waktu Otomatis
+Sapaan adaptif (*Selamat pagi/siang/sore/malam*) dan 4 kartu menu arsip (2x2):
+![04 - Dashboard Utama](screenshots/04-dashboard-utama.png)
+
+#### 5. Modal Laporan Pemesanan Buku
+Tabel rekapitulasi seluruh pesanan yang masuk:
+![05 - Modal Laporan Pemesanan](screenshots/05-dashboard-modal-laporan.png)
+
+#### 6. Modal History Transaksi
+Catatan riwayat transaksi keuangan dan volume eksemplar buku:
+![06 - Modal History Transaksi](screenshots/06-dashboard-modal-transaksi.png)
+
+---
+
+### 7.3 Halaman Stok & Katalog (`stok.html`)
+
+#### 7. Tabel Buku Besar Inventaris & Status HABIS
+Tabel dinamis dari JavaScript dengan indikator stempel **HABIS** otomatis:
+![07 - Katalog Stok Utama](screenshots/07-katalog-stok-utama.png)
+
+#### 8. Tambah Stok Buku Baru (Manipulasi DOM)
+Penambahan data baru melalui form yang langsung disisipkan ke DOM dengan animasi sorotan:
+![08 - Hasil Tambah Stok Baru](screenshots/08-katalog-tambah-buku-sukses.png)
+
+---
+
+### 7.4 Halaman Pemesanan / Checkout (`checkout.html`)
+
+#### 9. Lembar Faktur Nota Belanja & Formulir Pemesan
+Kelola kuantitas keranjang (+/-) dan kalkulasi total otomatis di atas garis putus-putus:
+![09 - Checkout Nota dan Form](screenshots/09-checkout-nota-dan-form.png)
+
+#### 10. Validasi Formulir Pemesanan
+Pesan kesalahan spesifik di bawah field yang belum terisi dengan benar:
+![10 - Validasi Error Checkout](screenshots/10-checkout-validasi-error.png)
+
+#### 11. Modal Konfirmasi Surat Pesanan & Stempel Nomor DO
+Penerbitan nomor Delivery Order resmi dan stempel validasi:
+![11 - Modal Konfirmasi DO](screenshots/11-checkout-modal-konfirmasi-do.png)
+
+---
+
+### 7.5 Halaman Tracking Pengiriman (`tracking.html`)
+
+#### 12. Pelacakan Sukses (Progres Tiket 5 Tahap & Stempel DITERIMA)
+Status visual perjalanan paket menggunakan Internal CSS dengan stempel akhir:
+![12 - Tracking Sukses](screenshots/12-tracking-pencarian-sukses.png)
+
+#### 13. Penanganan Kesalahan Nomor DO Tidak Ditemukan
+Pemberitahuan error jika nomor DO tidak terdaftar dalam arsip:
+![13 - Tracking DO Tidak Ditemukan](screenshots/13-tracking-nomor-do-tidak-ditemukan.png)
+
+---
+
+### 7.6 Tampilan Responsif (Mobile 375px)
+
+#### 14. Tampilan Mobile Dashboard
+Penyesuaian tata letak grid menjadi 1 kolom vertikal pada layar smartphone:
+![14 - Responsif Mobile Dashboard](screenshots/14-responsif-mobile-dashboard.png)
+
+#### 15. Tampilan Mobile Tracking Pengiriman
+Jalur progres tiket pengiriman yang bertransformasi menjadi garis vertikal responsif:
+![15 - Responsif Mobile Tracking](screenshots/15-responsif-mobile-tracking.png)
 
